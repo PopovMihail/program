@@ -56,6 +56,24 @@ void stok(char *s, char stk)
 	}
 //	return 0;
 }
+/*ñðàâíåíèå ñòðîê*/ 
+int scmp(char *s, char *s2)
+{
+	
+	int i, k,out;
+	k = size_s(s);
+	if (k == size_s(s2)){
+		for(i = 0; i < k; i++){
+		if (s[i] != s2[i]){
+			out = 1;
+			return out;
+		}
+		}
+	}
+	out = 0;
+	
+	return out;
+}
 /*ïðîâåðêà íà ïðèíàäëåæíîñòü ñèìâîëà äàííîìó ìíîæåñòâó*/
 void sspn(char *s)
 {
