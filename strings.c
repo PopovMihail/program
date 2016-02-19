@@ -57,14 +57,14 @@ int main()
     return 0;
 }
 
-/*СЂР°Р·РјРµСЂ СЃС‚СЂРѕРєРё*/
+/*размер строки*/
 int size_s(char *s)
 {
     int i;
     for (i = 0; s[i] != '\0'; i++);
     return i;
 }
-/*СЂР°Р·РґРµР»РµРЅРёРµ РЅР° СЃС‚РѕРєРё*/
+/*разделение на стоки*/
 void stok(char *s)//, char stk)
 {
 	
@@ -84,7 +84,7 @@ void stok(char *s)//, char stk)
 	
 }
 
-/*СЃСЂР°РІРЅРµРЅРёРµ СЃС‚СЂРѕРє*/ 
+/*сравнение строк*/ 
 int scmp(char *s, char *s2)
 {
 	
@@ -102,7 +102,7 @@ int scmp(char *s, char *s2)
 	
 	return out;
 }
-/*РїСЂРѕРІРµСЂРєР° РЅР° РїСЂРёРЅР°РґР»РµР¶РЅРѕСЃС‚СЊ СЃРёРјРІРѕР»Р° РґР°РЅРЅРѕРјСѓ РјРЅРѕР¶РµСЃС‚РІСѓ*/
+/*проверка на принадлежность символа данному множеству*/
 /*
 void sspn(char *s)
 {
@@ -110,7 +110,7 @@ void sspn(char *s)
 	max = size_s(s);
 	for(i = 0; i < max; i++){
 		if (s[i] == '*' || '|' || '<' || '>' || '/' || '?' || ':'){
-			fprintf(stderr, "invalid character | в„– %d \n", i);
+			fprintf(stderr, "invalid character | № %d \n", i);
 			exit(EXIT_FAILURE);
 		}
 	}
