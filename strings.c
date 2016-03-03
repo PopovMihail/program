@@ -1,118 +1,126 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-	void stok(char *s);
-	const int len = 25;
-	const int size = 25;
-	char ns[255][255];
-	char del;
+void sspn(char *s);
+int slen(char *s);
+int stok(char *str, char delim, char *ptr[]);	
+int schr(char *str, char delim);
+int sequal(char *s, char *s2);
+void scopy(char *s, char *s2);
+void suntok(char *str, char delim, char *ptr[], int cnt);
 
 int main()
 {
-	int i,j;
-	char p[3];//"C:\\Windows\\system32+C:\\User\\test+C:\\Windows\\explorer.exe+D:\\Windows\\Distrib";
-	char dir1[255];
-	char dir2[255];
+	int i,j,k,f,t;
+	char dir1[] = "C:\\Windows";
+	char dir2[] = "E:\\olololo";
+	char del;
+	char str[] = "C:\\Windows\\system32+C:\\Use*r\\test+C:\\*indows\\explorer.exe+C:\\Windows\\Distrib";
+	char *ptr[10];
 	printf("delim: ");
-	scanf("%c\n", &del);
-	printf("paths: ");
-	scanf("%c\n",&p);
-	/*printf("dir1: ");
+	scanf("%c",&del);
+	
+/*	printf("paths: ");
+	scanf("%c\n",&str);
+	
+	printf("dir1: ");
 	scanf("%c\n",&dir1);
 	printf("dir2: ");
 	scanf("%c\n",&dir2);*/
 	
-	stok(p);
-	
-	for (i = 0; i < len; i++) {
-		
-		for(j = 0; j < size; j++){
-			printf("%c", ns[i][j]);
-			
-		}	
-	printf("\n");
+	i = stok(str, del, ptr);
+	for(j = 0;  j < i; j++) {
+		sspn(ptr[j]);
 	}
-	/*char str[256] = "Hellow+world+*+I+KILL+YOU";
-	char str2[256] = "Hellow+world+*+I+KILL+YOU";
-	int i,j;
-	//char delil;
-	
-	//sspn(str);
-	//scanf("%c",&stk);
-	printf("%d\n",scmp(str,str2));
-	printf("%d\n",size_s(str));
-	
-	stok(str);
-	
-	for (i = 0; i < 25; i++) {
-		
-		for(j = 0; j < 25; j++){
-			printf("%c", ns[i][j]);
-			
-		}	
-	printf("\n");
+	for(j = 0;  j < i; j++) {
+		f = sequal(ptr[j], dir1);
+		if(f == 1){
+			scopy(dir2, ptr[j]);
+		}
 	}
-	//printf("%d\n",scmp(str,str2));	
-	*/
-    return 0;
+	
+	suntok(str, del, ptr, i);
+	printf("%s",str);
+	
+	return 0;
 }
 
-/*размер строки*/
-int size_s(char *s)
+/*РєРѕРїРёСЂРѕРІР°РЅРёРµ СЃС‚СЂРѕРєРё*/
+void scopy(char *s, char *s2)
+{
+	int i;
+	for(i = 0; (s[i] != '\0' && s2[i] != '\0'); i++)
+		s2[i] = s[i];
+	
+}
+/*СЂР°Р·РјРµСЂ СЃС‚СЂРѕРєРё*/
+int slen(char *s)
 {
     int i;
     for (i = 0; s[i] != '\0'; i++);
     return i;
 }
-/*разделение на стоки*/
-void stok(char *s)//, char stk)
+/*СЂР°Р·РґРµР»РµРЅРёРµ РЅР° СЃС‚РѕРєРё*/
+int stok(char *str, char delim, char *ptr[])
 {
+	char *suf = str;
+	ptr[0] = str; //   вЂ“ "& str
+	int i, j = 1; // j вЂ“ '&&	% *1
 	
-	int i,j,k = 0;
-	
-    for (i = 0; i < len; i++) {
-		
-		for(j = k; s[j] != del; j++){
-			if (s[j] == '\0'){
-			break; 
-			}
-			
-			ns[i][j - k] = s[j];
-		}
-		k = j + 1;
+	while( ( i = schr(suf, delim) ) >= 0 ){
+		suf[i] = '\0';
+		suf = suf + i + 1;
+		ptr[j] = suf;
+		j++;
 	}
 	
+	return j;
 }
-
-/*сравнение строк*/ 
-int scmp(char *s, char *s2)
+/*СЃРѕР±РёСЂР°РЅРёРµ СЃС‚СЂРѕРєРё*/
+void suntok(char *str, char delim, char *ptr[], int cnt)
+{
+	int i;
+	for(i = 1; i < cnt; i++){
+		*(ptr[i] - 1) = delim;
+	}
+}
+/*РїРѕРёСЃРє СЃРёРјРІРѕР»Р° РІ СЃС‚СЂРѕРєРµ*/
+int schr(char *str, char delim)
+{
+	int i, idx = -1;
+	for(i = 0; (str[i] != '\0') && (str[i] != delim); i++);
+		if(str[i] == delim)
+			idx = i;
+return idx;
+}
+/*СЃСЂР°РІРЅРµРЅРёРµ СЃС‚СЂРѕРє*/ 
+int sequal(char *s, char *s2)
 {
 	
-	int i, k,out;
-	k = size_s(s);
-	if (k == size_s(s2)){
-		for(i = 0; i < k; i++){
+	int i, out = 1;
+	
+	for(i = 0; out && (s[i] != '\0' && s2[i] != '\0'); i++){
 		if (s[i] != s2[i]){
-			out = 1;
+			out = 0;
 			return out;
 		}
-		}
 	}
-	out = 0;
+	//out = 1;
 	
 	return out;
 }
-/*проверка на принадлежность символа данному множеству*/
-/*
+/*РїСЂРѕРІРµСЂРєР° РЅР° РїСЂРёРЅР°РґР»РµР¶РЅРѕСЃС‚СЊ СЃРёРјРІРѕР»Р° РґР°РЅРЅРѕРјСѓ РјРЅРѕР¶РµСЃС‚РІСѓ*/
+
 void sspn(char *s)
 {
-	int i, max;
-	max = size_s(s);
-	for(i = 0; i < max; i++){
-		if (s[i] == '*' || '|' || '<' || '>' || '/' || '?' || ':'){
-			fprintf(stderr, "invalid character | № %d \n", i);
-			exit(EXIT_FAILURE);
+	int i;
+	
+	for(i = 0;  s[i] != '\0'; i++){
+		if (s[i] ==  '*' ){
+			
+			fprintf(stderr, "invalid character  %d \n", i);
+			printf("%s\n",s);
+			//exit(EXIT_FAILURE);
 		}
 	}
-	return 0;
-}*/
+}
