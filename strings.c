@@ -8,16 +8,16 @@ int schr(char *str, char delim);
 int sequal(char *s, char *s2);
 void scopy(char *s, char *s2);
 void suntok(char *str, char delim, char *ptr[], int cnt);
-int raznica(char *s, char *s2);
+
 
 int main()
 {
 	int i,j,k,t,s,delta, d_str, j_sdvig, index;
-	char dir1[] = "C:\\Windows";
-	char dir2[] = "E:\\olo";
+	char dir1[15];// = "C:\\Windows";
+	char dir2[15];// = "E:\\WindowsXP";
 	char del;
 	char raz = '\\';
-	char str[260] = "C:\\Windows\\system32+C:\\User\\test+C:\\user\\explorer.exe+C:\\Windows\\Distrib";
+	char str[260];// = "C:\\Windows\\system32+C:\\User\\test+C:\\user\\explorer.exe+C:\\Windows\\Distrib";
 	char *ptr[10];
 	char *ptr_dir1[3];
 	char *ptr_raz[6];
@@ -25,14 +25,16 @@ int main()
 	scanf("%c",&del);
 	char *suf = str;
 //C:\\Windows\\system32+C:\\User\\test+C:\\user\\explorer.exe+C:\\Windows\\Distrib
-/*	printf("paths: ");
-	scanf("%c\n",&str);
-	
+	printf("paths: ");
+	scanf("%s",&str);
+		
 	printf("dir1: ");
-	scanf("%c\n",&dir1);
+	scanf("%s",&dir1);
+	
 	printf("dir2: ");
-	scanf("%c\n",&dir2);*/
-	delta = raznica(dir1, dir2);
+	scanf("%s",&dir2);
+	
+	delta = slen(dir1) - slen(dir2);
 	d_str = slen(str);
 	//printf("delta = %d\n", delta);
 	i = stok(str, del, ptr);
@@ -41,61 +43,55 @@ int main()
 	
 	
 	int f = 0;
-	
+	s = 0;
 	
 	for(j = 0;  j < i; j++) {
 		sspn(ptr[j]);
 	}
 	
-	for(j = 0;  j < i; j++) {
+	for (j = 0;  j < i; j++) {
 		t = stok(ptr[j], raz, ptr_raz);
 		
-		for(s = 0;  s < k; s++){
+		for (s = 0;  s < k; s++) {
 		
-			f += sequal(ptr_raz[s], ptr_dir1[s]);
+			f += sequal(ptr_dir1[s], ptr_raz[s]);
 			//printf("F = %d\n", f);
-			if((f == 2) ){
+			if (f == 2) {
 			
-			index = ptr_raz[s+1] - suf;	
-			//printf("index= %d\n ", index);
-			
-			
-			if (delta < 0) {
-				for (j_sdvig = d_str - delta;  j_sdvig > index + delta; j_sdvig--) {
-					str[j_sdvig - delta] = str[j_sdvig];
+				index = ptr_raz[s+1] - suf;	
+				//printf("index= %d\n ", index);
+						
+				if (delta < 0) {
+					for (j_sdvig = d_str - delta;  j_sdvig > index + delta; j_sdvig--) {
+						str[j_sdvig - delta] = str[j_sdvig];
+					}
+					
+					for (j_sdvig = j;  j_sdvig < i; j_sdvig++) {
+						ptr[j_sdvig + 1] = ptr[j_sdvig + 1] - delta;
+					}
+					ptr_raz[s +1] = ptr_raz[s + 1] - delta;		
 				}
 				
-				for (j_sdvig = j;  j_sdvig < i; j_sdvig++) {
-					ptr[j_sdvig + 1] = ptr[j_sdvig + 1] - delta;
+				if (delta > 0) {
+					//d_str = d_str - delta;
+					for (j_sdvig = index;  j_sdvig < d_str; j_sdvig++) {
+						str[j_sdvig - delta] = str[j_sdvig];
+					}
+					str[d_str-delta] = '\0';
+					for (j_sdvig = j;  j_sdvig < i; j_sdvig++) {
+						ptr[j_sdvig + 1] = ptr[j_sdvig + 1] - delta;
+					}
+					ptr_raz[s + 1] = ptr_raz[s + 1] - delta;		
 				}
-				ptr_raz[s +1] = ptr_raz[s + 1] - delta;		
-			}
-			
-			if (delta > 0) {
-				for (j_sdvig = index;  j_sdvig < d_str - delta; j_sdvig++) {
-					str[j_sdvig - delta] = str[j_sdvig];
-					//str[d_str - delta] = '\0';
-				}
-				
-				for (j_sdvig = j;  j_sdvig < i; j_sdvig++) {
-					ptr[j_sdvig + 1] = ptr[j_sdvig + 1] - delta;
-				}
-				ptr_raz[s + 1] = ptr_raz[s + 1] - delta;		
-			}
-			suntok(ptr[j], raz, ptr_raz, t);
-				
-			
-				
-				
-				
-				
+				suntok(ptr[j], raz, ptr_raz, t);
+						
 				scopy(dir2, ptr[j]);
-
-			//	f = 0;
+				
 			}
-			
+
 			suntok(ptr[j], raz, ptr_raz, t);
 		}
+		
 		f = 0;
 	}
 	
@@ -104,32 +100,9 @@ int main()
 	
 	return 0;
 }
-void sdvig(char *s, int delt, int idx)
-{
-	int i, n;
-	char tmp;
-	
-	n = slen(s);
-	if (delt > 0){
-		for (i = idx; i < n ; i++)
-			s[i-delt] = s[i]; 
-	}
-	if (delt < 0){
-	
-		for (i = n - delt; i > idx; i--){
-		
-			s[i] = s[i+delt];
-		}
-	}
-}
-int raznica(char *s, char *s2)
-{
-    int i;
-    i = slen(s) - slen(s2);
-     
-    return i;
-}
-/*…ÕŒ’œÕ¡ﬁÃ’≈ ﬂ–œÕ…’*/
+
+
+/*–∫–æ–ø–∏—Ä–æ–≤–∞–Ω–∏–µ —Å—Ç—Ä–æ–∫*/
 void scopy(char *s, char *s2)
 {
 	int i;
@@ -137,14 +110,14 @@ void scopy(char *s, char *s2)
 		s2[i] = s[i];
 	
 }
-/*œﬁ√À≈œ ﬂ–œÕ…’*/
+/*–æ–ø—Ä–µ–¥–µ–ª–µ–Ω–∏–µ –¥–ª–∏–Ω–Ω—ã —Å—Ç—Ä–æ–∫–∏*/
 int slen(char *s)
 {
     int i;
     for (i = 0; s[i] != '\0'; i++);
     return i;
 }
-/*œﬁ√ƒ≈ ≈Ã’≈ Ãﬁ ﬂ–Õ…’*/
+/*—Ä–∞–∑–±–∏–µ–Ω–∏–µ —Å—Ç—Ä–æ–∫–∏ –Ω–∞ –ø–æ–¥—Å—Ç—Ä–æ–∫–∏*/
 int stok(char *str, char delim, char *ptr[])
 {
 	char *suf = str;
@@ -160,7 +133,7 @@ int stok(char *str, char delim, char *ptr[])
 	
 	return j;
 }
-/*ﬂÕ¿’œﬁÃ’≈ ﬂ–œÕ…’*/
+/*—Å–æ–±–∏—Ä–∞–Ω–∏–µ –ø–æ–¥—Å—Ç—Ä–æ–∫ –≤ –∏—Å—Ö–æ–¥–Ω—É—é —Å—Ç—Ä–æ–∫—É*/
 void suntok(char *str, char delim, char *ptr[], int cnt)
 {
 	int i;
@@ -168,7 +141,7 @@ void suntok(char *str, char delim, char *ptr[], int cnt)
 		*(ptr[i] - 1) = delim;
 	}
 }
-/*ŒÕ’ﬂ… ﬂ’À¡Õ ﬁ ¡ ﬂ–œÕ…≈*/
+/*–ø–æ–∏—Å–∫ —Å–∏–º–≤–æ–ª–∞ –≤ —Å—Ç—Ä–æ–∫–µ*/
 int schr(char *str, char delim)
 {
 	int i, idx = -1;
@@ -177,13 +150,13 @@ int schr(char *str, char delim)
 			idx = i;
 return idx;
 }
-/*ﬂœﬁ¡Ã≈Ã’≈ ﬂ–œÕ…*/ 
+/*—Å—Ä–∞–≤–Ω–µ–Ω–∏–µ –¥–≤—É—Ö —Å—Ç—Ä–æ–∫*/ 
 int sequal(char *s, char *s2)
 {
 	int i, out = 1;
 	
-	for(i = 0; out && (s[i] != '\0' && s2[i] != '\0'); i++){
-		if (s[i] != s2[i]){
+	for (i = 0; out && (s[i] != '\0' && s2[i] != '\0'); i++) {
+		if (s[i] != s2[i]) {
 			out = 0;
 			return out;
 		}
@@ -192,7 +165,7 @@ int sequal(char *s, char *s2)
 	
 	return out;
 }
-/*ŒœÕ¡≈œ…ﬁ Ãﬁ Œœ’Ãﬁƒ ≈‘ÃÕﬂ–› ﬂ’À¡Õ ﬁ ƒﬁÃÃÕÀ— ÀÃÕ‘≈ﬂ–¡—*/
+/*–ø—Ä–æ–≤–µ—Ä–∫–∞ —Å—Ç—Ä–æ–∫–∏ –Ω–∞ –Ω–µ –¥–æ–ø—É—Å—Ç–∏–º—ã–µ —Å–∏–º–≤–æ–ª—ã*/
 
 void sspn(char *s)
 {
