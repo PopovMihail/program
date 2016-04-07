@@ -3,8 +3,6 @@
 #include "string.h"
 #include "proc.h"
 
-
-
 int main()
 {
 	char str[261] ;
@@ -13,9 +11,6 @@ int main()
 	input(str);
 	check(str);
 	process(str, ptr);
-
-
-	
 	return 0;
 }
 

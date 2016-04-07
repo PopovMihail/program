@@ -73,11 +73,17 @@ void sspn(char *s)
 {
 	int i;
 	
+	if (slen(s) > 260){
+		printf("lengs string > 260  \n");
+		//printf("%s\n",s);
+		exit(EXIT_FAILURE);
+	}
+	
 	for(i = 0;  s[i] != '\0'; i++){
 		if ((s[i] == '*') || (s[i] == '?') || (s[i] == '"') || (s[i] == '>') || (s[i] == '<') || (s[i] == '|') ){
 			
 			fprintf(stderr, "invalid character number %d \n", i+1);
-			printf("%s\n",s);
+			//printf("%s\n",s);
 			//exit(EXIT_FAILURE);
 		}
 	}

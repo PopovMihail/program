@@ -8,9 +8,10 @@ void input(char *s)
 	printf("Please input string \n");
 	//scanf("%s", &s);
 	int i=0;
-	do{
-		scanf("%c",&s[i]); i++;
-	}while(s[i-1] != '\n');
+	while((s[i-1] != '\n')) {
+		scanf("%c",&s[i]); 
+		i++;
+	}
 	s[i-1] = '\0';
 }
 
@@ -43,6 +44,7 @@ void process(char *str, char *ptr[])
 				printf("%s, ",ptr[i] );
 			}
 		}
+		printf("\n");
 	suntok(str, lin, ptr, t);
 	}
 	else{
@@ -77,14 +79,15 @@ void process(char *str, char *ptr[])
 						printf("%s, ",ptr[i] );
 					}
 				}
+				printf("\n");
+				
 				suntok(str, lin, ptr, t);
 				
 			}
-		}
-		else{
-		printf("Invalid put ");
-		}
+		}	
 	} 
-		
+		else{
+		printf("Invalid put \n");
+		}
 	}
 }
